@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RapidRespiro AI | Professional Diagnostic Suite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --accent: #00e5ff; }
+        body { transition: background 0.3s, color 0.3s; font-family: 'Inter', sans-serif; }
+        
+        /* --- DYNAMIC THEME FONT COLORS --- */
+        [data-bs-theme="dark"] body { background-color: #0b0c10; color: #c5c6c7; }
+        [data-bs-theme="dark"] .section-title { color: #00e5ff !important; font-weight: 600; } /* SELECT RADIOGRAPH */
+        [data-bs-theme="dark"] .status-complete { color: #ffffff !important; font-weight: 700; text-transform: uppercase; } /* ANALYSIS COMPLETE */
+        [data-bs-theme="dark"] .outcome-header { color: #45a29e !important; letter-spacing: 1.5px; } /* DIAGNOSTIC OUTCOME */
+
+        [data-bs-theme="light"] body { background-color: #f8f9fa; color: #212529; }
+        [data-bs-theme="light"] .section-title { color: #0056b3 !important; font-weight: 600; }
+        [data-bs-theme="light"] .status-complete { color: #000000 !important; font-weight: 700; text-transform: uppercase; }
+        [data-bs-theme="light"] .outcome-header { color: #6c757d !important; letter-spacing: 1.5px; }
+
+        /* --- UI COMPONENTS --- */
+        .sidebar { min-height: 100vh; border-right: 1px solid rgba(255,255,255,0.1); padding: 40px 20px; }
+        .analysis-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px; }
+        .img-frame { width: 100%; border-radius: 6px; border: 1px solid #444; margin-top: 10px; }
+        .label-sm { font-size: 0.75rem; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+        .reasoning-box { margin-top: 30px; padding: 20px; border-left: 4px solid var(--accent); line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h4 class="fw-bold m-0">RapidRespiro AI</h4>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="toggleTheme()">Theme</button>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="section-title small">SELECT RADIOGRAPH</h6>
+                    <input type="file" id="fileInput" class="form-control form-control-sm bg-transparent mt-2">
+                </div>
+
+                <button onclick="runAnalysis()" class="btn btn-info w-100 fw-bold mb-4">RUN DIAGNOSTICS</button>
+                
+                <div id="status" class="status-complete small mb-5">SYSTEM READY</div>
+
+                <div id="summary" style="display:none">
+                    <h6 class="outcome-header small">DIAGNOSTIC OUTCOME</h6>
+                    <h2 id="predLabel" class="display-5 fw-bold mt-2">---</h2>
+                    <p id="confText" class="text-muted">Confidence: 0%</p>
+                </div>
+            </div>
+
+            <div class="col-md-9 p-5">
+                <div class="analysis-card">
+                    <h6 class="text-muted small mb-4">MULTI-SPECTRAL ANALYSIS</h6>
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="label-sm">1. Input Raw</div>
+                            <img id="imgRaw" class="img-frame" src="https://via.placeholder.com/300?text=Waiting+Input">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="label-sm">2. AI Attention</div>
+                            <img id="imgHeat" class="img-frame" src="https://via.placeholder.com/300?text=Waiting+Input">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="label-sm">3. Localized Region</div>
+                            <img id="imgBox" class="img-frame" src="https://via.placeholder.com/300?text=Waiting+Input">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reasoningPanel" class="reasoning-box" style="display:none">
+                    <h6 class="small fw-bold mb-3 text-uppercase">Technical Reasoning</h6>
+                    <p id="reasoningText" class="m-0"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-bs-theme');
+            html.setAttribute('data-bs-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        async function runAnalysis() {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files[0]) return;
+
+            document.getElementById('status').innerText = "Computing Tensors...";
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            const response = await fetch('/analyze', { method: 'POST', body: formData });
+            const data = await response.json();
+
+            if (data.error) {
+                alert(data.error);
+                document.getElementById('status').innerText = "System Idle";
+                return;
+            }
+
+            // Update Images
+            document.getElementById('imgRaw').src = `data:image/jpeg;base64,${data.images[0]}`;
+            document.getElementById('imgHeat').src = `data:image/jpeg;base64,${data.images[1]}`;
+            document.getElementById('imgBox').src = `data:image/jpeg;base64,${data.images[2]}`;
+            
+            // Update Text
+            const predEl = document.getElementById('predLabel');
+            predEl.innerText = data.prediction;
+            predEl.style.color = data.prediction === 'NORMAL' ? '#2ecc71' : '#e74c3c';
+            
+            document.getElementById('confText').innerText = `Confidence: ${data.confidence}`;
+            document.getElementById('reasoningText').innerText = data.reasoning;
+            
+            // Show Panels
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('reasoningPanel').style.display = 'block';
+            document.getElementById('status').innerText = "Analysis Complete";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+torch
+torchvision
+torchaudio
+numpy==1.26.0
+pandas==2.1.1
+matplotlib==3.8.1
+opencv-python==4.8.1.78
+tqdm
+flask
+Pillow
+ttkbootstrap
+PyQt6
