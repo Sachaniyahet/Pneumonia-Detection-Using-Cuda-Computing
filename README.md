@@ -1,93 +1,263 @@
-Here is the updated, complete `README.md` file restructured to match the exact schema, formatting, and layout of your AES File Encryptor example, while containing your pneumonia project's details.
-
-### `README.md`
-
-```markdown
-# Pneumonia Detection from Chest X-Ray Images Using Deep Ensemble Learning & Grad-CAM
+# Pneumonia Detection from Chest X-Ray Images using Deep Ensemble Learning and Grad-CAM
 
 ## Overview
-Pneumonia Detection from Chest X-Ray Images is a GUI-based desktop application that utilizes deep learning ensemble techniques to identify pneumonia abnormalities in digital radiographs. The core system blends predictions from DenseNet121 and ResNet34 models, while integrating an optimized Grad-CAM framework to generate visual attention maps identifying critical diagnostic regions of interest.
 
-## Features
-- **Ensemble-Driven Diagnostic Matrix**: Evaluates scans using soft-voting predictions across both DenseNet121 and ResNet34.
-- **Explainable AI Integration (Grad-CAM)**: Captures features and gradients dynamically from final convolutional layers using isolated tensor cloning to avoid backend memory conflicts.
-- **Binary Clinical Readout**: Simplifies raw probability output into a rapid, high-contrast "YES" or "NO" classification for fast clinical triage.
-- **Multi-Threaded UI Performance**: Runs asynchronous network passes inside a detached execution worker thread (`QThread`), keeping the PyQt6 desktop framework fluid and responsive.
-- **Automated Verification Reports**: Automatically matches positive scans with side-by-side verification images inside an output subdirectory.
+Pneumonia remains one of the leading causes of respiratory-related mortality worldwide. Early and accurate diagnosis from chest radiographs is critical for timely treatment and improved patient outcomes.
 
-## Pipeline Deliverables
-### Live Grad-CAM Generation Analytics:
-<kbd>
-  <img src="diagnostic_outputs/cam_report_sample.png" alt="Grad-CAM Output Pipeline Preview" width="800px">
-</kbd>
+This project presents an **AI-powered desktop application** that automatically detects pneumonia from chest X-ray images using a **Deep Ensemble Learning framework** combining **DenseNet121** and **ResNet34**. To enhance transparency and clinical trust, the system integrates **Grad-CAM (Gradient-weighted Class Activation Mapping)**, allowing users to visualize the image regions that influence the model's decision.
 
-### Ensemble Validation Matrix:
-<kbd>
-  <img src="diagnostic_outputs/confusion_matrix.png" alt="Ensemble Confusion Matrix Diagram" width="500px">
-</kbd>
+The application is built with **PyTorch**, accelerated with **CUDA**, and deployed through an intuitive **PyQt6 graphical interface** for real-time diagnostic assistance.
 
-## Dataset Details
-- **Dataset Source**: Chest X-Ray Images (Pneumonia) [Kaggle / Mendeley Data]
-- **Target Profiles**: 2 Balance Output Categories (Normal / Pneumonia)
-- **Data Footprint**: 5,856 Total Diagnostic Images (1.15 GB Total Volume)
-  - **Training Set**: 5,216 Images
-  - **Validation Set**: 320 Images
-  - **Testing Set**: 320 Images
+---
 
-## System Core Parameters
-- **Compute Architecture**: PyTorch Engine (CUDA Hardware Acceleration Ready)
-- **Backbone Framework Modules**: DenseNet121 + ResNet34 Base Deployments
-- **Optimizer & Objective Criteria**: Adam Optimizer paired with CrossEntropyLoss
-- **Graphical GUI Environment**: PyQt6 (Configured with high-DPI automatic desktop scaling)
+## Key Features
+
+### Deep Ensemble Classification
+
+* Combines predictions from **DenseNet121** and **ResNet34**
+* Uses soft-voting ensemble strategy for improved robustness
+* Reduces individual model bias and improves diagnostic reliability
+
+### Explainable AI with Grad-CAM
+
+* Generates visual attention heatmaps
+* Highlights lung regions contributing to the prediction
+* Improves interpretability and model transparency
+
+### Clinical Decision Support
+
+* Provides a simple binary output:
+
+  * **YES** → Pneumonia Detected
+  * **NO** → No Pneumonia Detected
+* Designed for rapid screening and triage assistance
+
+### Responsive Desktop Interface
+
+* Built using **PyQt6**
+* Uses **QThread-based asynchronous inference**
+* Prevents UI freezing during model execution
+
+### Automated Diagnostic Reports
+
+* Stores Grad-CAM visualizations automatically
+* Creates side-by-side comparison outputs for review and validation
+
+---
+
+## System Architecture
+
+```text
+Chest X-Ray Image
+        │
+        ▼
+ Image Preprocessing
+        │
+        ▼
+ ┌──────────────────┐
+ │   DenseNet121    │
+ └──────────────────┘
+        │
+        ├──── Soft Voting Ensemble ────► Final Prediction
+        │
+ ┌──────────────────┐
+ │    ResNet34      │
+ └──────────────────┘
+        │
+        ▼
+     Grad-CAM
+        │
+        ▼
+ Heatmap Visualization
+```
+
+---
+
+## Project Workflow
+
+1. Upload a chest X-ray image.
+2. Preprocess and normalize the image.
+3. Perform inference using:
+
+   * DenseNet121
+   * ResNet34
+4. Combine predictions through ensemble voting.
+5. Generate Grad-CAM attention maps.
+6. Display prediction and visualization results.
+7. Save diagnostic outputs automatically.
+
+---
+
+## Sample Outputs
+
+### Grad-CAM Diagnostic Visualization
+
+<p align="center">
+  <img src="diagnostic_outputs/cam_report_sample.png" width="850">
+</p>
+
+### Ensemble Confusion Matrix
+
+<p align="center">
+  <img src="diagnostic_outputs/confusion_matrix.png" width="500">
+</p>
+
+---
+
+## Dataset Information
+
+**Dataset:** Chest X-Ray Images (Pneumonia)
+
+Source:
+
+* Kaggle
+* Mendeley Data
+
+### Dataset Statistics
+
+| Category   | Images |
+| ---------- | -----: |
+| Training   |  5,216 |
+| Validation |    320 |
+| Testing    |    320 |
+| Total      |  5,856 |
+
+### Classes
+
+* Normal
+* Pneumonia
+
+Dataset Size: **~1.15 GB**
+
+---
+
+## Technology Stack
+
+| Component               | Technology            |
+| ----------------------- | --------------------- |
+| Deep Learning Framework | PyTorch               |
+| CNN Architectures       | DenseNet121, ResNet34 |
+| Explainable AI          | Grad-CAM              |
+| GUI Framework           | PyQt6                 |
+| GPU Acceleration        | CUDA                  |
+| Optimizer               | Adam                  |
+| Loss Function           | CrossEntropyLoss      |
+
+---
 
 ## Installation
-1. Clone this repository:
-   ```sh
-   git clone [https://github.com/Darsh-Andharia/Pneumonia-Detection-Using-Cuda-Computing.git](https://github.com/Darsh-Andharia/Pneumonia-Detection-Using-Cuda-Computing.git)
-   cd Pneumonia-Detection-Using-Cuda-Computing
 
+### Clone Repository
+
+```bash
+git clone https://github.com/Darsh-Andharia/Pneumonia-Detection-Using-Cuda-Computing.git
+
+cd Pneumonia-Detection-Using-Cuda-Computing
 ```
 
-2. Install the required deep learning and desktop environment dependencies:
-```sh
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
-
 ```
 
+### Add Pre-trained Weights
 
-3. Place your pre-trained PyTorch weight checkpoints in the project root directory:
-* Ensure `densenet_best.pt` and `resnet_best.pt` match the target structural classes setup.
+Place the following model checkpoints in the project root directory:
 
+```text
+densenet_best.pt
+resnet_best.pt
+```
 
+---
 
-## Usage
+## Running the Application
 
-### Running the Main GUI Console
+Launch the desktop application:
 
-```sh
+```bash
 python rapidrespiro_app.py
-
 ```
 
-### Run Diagnostic Scan:
+---
 
-1. Click on **"Upload X-Ray Image"** to choose your digital radiograph (`.png`, `.jpg`, `.jpeg`).
-2. Once verified in the main viewer canvas window, press **"Run Ensemble Diagnostic"**.
-3. The application will compute prediction matrices and render the diagnostic determination:
-* **YES**: (Highlighted in warning crimson) Pneumonia detected. A side-by-side Grad-CAM heatmap localization layer maps to your screen and archives in the output folder.
-* **NO**: (Highlighted in medical green) No target abnormalities matching clinical criteria detected.
+## How to Use
 
+### Step 1: Upload Image
 
+Click **Upload X-Ray Image** and select a supported image:
 
-## Contribution
+```text
+.png
+.jpg
+.jpeg
+```
 
-Contributions are welcome! Feel free to submit issues and pull requests to upgrade structural layer backbones or test wider multi-class variants.
+### Step 2: Run Diagnosis
+
+Click **Run Ensemble Diagnostic**.
+
+### Step 3: Review Results
+
+#### Positive Case
+
+**YES – Pneumonia Detected**
+
+* Red-highlighted result
+* Grad-CAM heatmap generated
+* Diagnostic report saved automatically
+
+#### Negative Case
+
+**NO – No Pneumonia Detected**
+
+* Green-highlighted result
+* No abnormal pneumonia patterns identified
+
+---
+
+## Future Improvements
+
+* Multi-class thoracic disease classification
+* Vision Transformer (ViT) integration
+* Web-based deployment
+* DICOM image support
+* Real-time hospital PACS integration
+* Model quantization for edge devices
+
+---
+
+## Project Structure
+
+```text
+Pneumonia-Detection-Using-Cuda-Computing/
+│
+├── rapidrespiro_app.py
+├── densenet_best.pt
+├── resnet_best.pt
+├── requirements.txt
+├── diagnostic_outputs/
+│   ├── cam_report_sample.png
+│   └── confusion_matrix.png
+│
+└── README.md
+```
+
+---
 
 ## Authors
 
-* **[Sachaniya Het](https://github.com/Sachaniyahet)**
-* **[Darsh Andharia](https://github.com/DarshAndharia)**
+### Het Sachaniya
 
-```
+GitHub: https://github.com/Sachaniyahet
 
-```
+### Darsh Andharia
+
+GitHub: https://github.com/DarshAndharia
+
+---
+
+## License
+
+This project is intended for academic, educational, and research purposes. Clinical deployment should only be considered after extensive medical validation and regulatory approval.
