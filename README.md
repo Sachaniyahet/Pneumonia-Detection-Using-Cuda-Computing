@@ -99,7 +99,7 @@ Chest X-Ray Image
 ### Ensemble Confusion Matrix
 
 <p align="center">
-  <img src="diagnostic_outputs/cm_Ensemble.png" width="500">
+  <img src="cm_Ensemble.png" width="500">
 </p>
 
 ---
