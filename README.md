@@ -248,15 +248,15 @@ Pneumonia-Detection-Using-Cuda-Computing/
 
 ## Authors
 
-### Het Sachaniya
+[Sachaniyahet](https://github.com/Sachaniyahet)
+---
 
-GitHub: https://github.com/Sachaniyahet
-
-### Darsh Andharia
-
-GitHub: https://github.com/DarshAndharia
+[Darsh Andharia](https://github.com/DarshAndharia)
+---
 
 ---
+
+[Dateset Link](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
 
 ## License
 
