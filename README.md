@@ -93,7 +93,7 @@ Chest X-Ray Image
 ### Grad-CAM Diagnostic Visualization
 
 <p align="center">
-  <img src="diagnostic_outputs/cam_report_sample.png" width="850">
+  <img src="diagnostic_outputs/cam_report_person1954_bacteria_4886.jpeg" width="850">
 </p>
 
 ### Ensemble Confusion Matrix
