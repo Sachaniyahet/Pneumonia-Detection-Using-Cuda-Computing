@@ -153,11 +153,14 @@ Dataset Size: **~2.00 GB**
 ### Clone Repository
 
 ```bash
-git clone https://github.com/Darsh-Andharia/Pneumonia-Detection-Using-Cuda-Computing.git
+git clone https://github.com/Sachaniyahet/Pneumonia-Detection-Using-Cuda-Computing.git
 
 cd Pneumonia-Detection-Using-Cuda-Computing
 ```
 
+### Note :
+* Use a virtual environment to ensure proper separation of project dependencies and prevent conflicts with system-installed libraries.
+  
 ### Install Dependencies
 
 ```bash
@@ -251,7 +254,7 @@ Pneumonia-Detection-Using-Cuda-Computing/
 
 ## Authors
 
-[Sachaniyahet](https://github.com/Sachaniyahet)
+[Sachaniya Het](https://github.com/Sachaniyahet)
 ---
 
 [Darsh Andharia](https://github.com/DarshAndharia)
