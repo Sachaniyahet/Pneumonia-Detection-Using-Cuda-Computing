@@ -10,7 +10,7 @@ The application is built with **PyTorch**, accelerated with **CUDA**, and deploy
 
 ---
 
-##Note :
+## Note :
 * Built using **Python 3.11.7** to ensure maximum compatibility with libraries, dependencies, and application features.
 
 ## Key Features
