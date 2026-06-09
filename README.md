@@ -10,6 +10,9 @@ The application is built with **PyTorch**, accelerated with **CUDA**, and deploy
 
 ---
 
+##Note :
+* Built using **Python 3.11.7** to ensure maximum compatibility with libraries, dependencies, and application features.
+
 ## Key Features
 
 ### Deep Ensemble Classification
@@ -127,7 +130,7 @@ Source:
 * Normal
 * Pneumonia
 
-Dataset Size: **~1.15 GB**
+Dataset Size: **~2.00 GB**
 
 ---
 
